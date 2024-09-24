@@ -29,7 +29,7 @@ namespace TextRPG_SBH
             {
                 directoryInfo.Create();
             }
-
+            //저장한 텍스트파일 경로
             txtPath = folderPath + "\\savedata.txt";
 
             charSave = _charSave;
@@ -47,20 +47,24 @@ namespace TextRPG_SBH
 
         public bool LoadGame()
         {
+            //파일이 없으면 불러오기 실패
             if(!File.Exists(txtPath))
             {
                 return false;
             }
             else
             {
+                //리스트를 비워서 불러올 준비
                 saveDataList.Clear();
-
+                //줄 불러오기
                 StreamReader reader = new StreamReader(txtPath);
                 string readLine;
                 while((readLine = reader.ReadLine()) != null)
                 {
+                    //각 줄을 리스트에 저장
                     saveDataList.Add(readLine);
                 }
+                //파일 사용 끝
                 reader.Close();
                 return true;
             }
@@ -69,6 +73,7 @@ namespace TextRPG_SBH
         //리스트에 저장할 텍스트를 생성하는 함수
         private void ListMaker()
         {
+            //리스트를 비우고 저장할 내용 추가
             saveDataList.Clear();
             saveDataList.Add(charSave.UserName);
             saveDataList.Add(charSave.PlayerJobs.ToString());
