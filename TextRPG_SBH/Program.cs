@@ -18,38 +18,38 @@ namespace TextRPG_SBH
 
             bool isCharCreated = false;
 
-            while (!isCharCreated)
+            Console.WriteLine("저장된 데이터를 검색합니다.");
+            if (saveManager.LoadGame())
             {
-                Console.WriteLine("저장된 데이터를 검색합니다.");
-                if(saveManager.LoadGame())
+                Console.WriteLine("저장된 데이터가 존재합니다.");
+                Console.WriteLine("데이터를 불러오겠습니까?");
+                Console.WriteLine();
+                Console.WriteLine("1. 예\n2. 아니오 (2이외의 입력시 데이터를 불러옵니다.)");
+                if (InputInt(Console.ReadLine()) == 2)
                 {
-                    Console.WriteLine("저장된 데이터가 존재합니다.");
-                    Console.WriteLine("데이터를 불러오겠습니까?");
-                    Console.WriteLine();
-                    Console.WriteLine("1. 예\n2. 아니오 (2이외의 입력시 데이터를 불러옵니다.)");
-                    if (InputInt(Console.ReadLine()) == 2)
-                    {
-                        Console.WriteLine("새로운 캐릭터를 생성합니다.");
-                        Thread.Sleep(1000);
-                        Console.Clear();
-                    }
-                    else
-                    {
-                        Console.WriteLine("데이터를 불러옵니다.");
-                        playerChar.LoadPlayerData(saveManager.SaveDataList);
-                        Console.WriteLine("불러오기 성공");
-                        Thread.Sleep(1000);
-                        break;
-                    }
+                    Console.WriteLine("새로운 캐릭터를 생성합니다.");
+                    Thread.Sleep(1000);
+                    Console.Clear();
                 }
                 else
                 {
-                    Console.WriteLine("저장된 데이터가 없습니다. 새로운 캐릭터를 생성합니다.");
+                    Console.WriteLine("데이터를 불러옵니다.");
+                    playerChar.LoadPlayerData(saveManager.SaveDataList);
+                    Console.WriteLine("불러오기 성공");
                     Thread.Sleep(1000);
-                    Console.Clear();
-
+                    isCharCreated = true;
                 }
+            }
+            else
+            {
+                Console.WriteLine("저장된 데이터가 없습니다. 새로운 캐릭터를 생성합니다.");
+                Thread.Sleep(1000);
+                Console.Clear();
 
+            }
+
+            while (!isCharCreated)
+            {
                 Console.WriteLine("당신의 이름은?");
                 inputName = Console.ReadLine();
 
@@ -221,10 +221,7 @@ namespace TextRPG_SBH
                             input = InputInt(Console.ReadLine());
                             if(input == 1)
                             {
-                                saveManager.SaveGame();
-                                TextCreater("저장이 완료되었습니다");
-                                Thread.Sleep(1000);
-                                Console.Clear();
+                                SaveGame();
                             }
                             else
                             {
@@ -251,10 +248,7 @@ namespace TextRPG_SBH
                                     input = InputInt(Console.ReadLine());
                                     if (input == 1)
                                     {
-                                        saveManager.SaveGame();
-                                        TextCreater("저장이 완료되었습니다");
-                                        Thread.Sleep(1000);
-                                        Console.Clear();
+                                        SaveGame();
                                     }
                                     else
                                     {
@@ -682,6 +676,14 @@ namespace TextRPG_SBH
                 Console.SetCursorPosition(0, Console.GetCursorPosition().Top - 1);
                 Console.Write("\r                                                                                \r");
             }
+        }
+
+        private static void SaveGame()
+        {
+            saveManager.SaveGame();
+            TextCreater("저장이 완료되었습니다");
+            Thread.Sleep(1000);
+            Console.Clear();
         }
     }
 }

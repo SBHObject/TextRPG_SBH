@@ -9,13 +9,18 @@ namespace TextRPG_SBH
 {
     internal class GameSaveManager
     {
+        //세이브 폴더 경로
         private string folderPath;
+        //세이브 폴더의 존재여부 확인용
         private DirectoryInfo directoryInfo;
+        //세이브 텍스트 파일 경로
         private string txtPath;
 
+        //저장을 위해 사용될 캐릭터, 상점 객체
         private Character charSave;
         private Shop shopSave;
 
+        //저장 및 불러오기시 사용되는 리스트
         private List<string> saveDataList = new List<string>();
         public List<string> SaveDataList {  get { return saveDataList; } }
 
